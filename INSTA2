@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+
+class Insta extends StatefulWidget {
+  @override
+  State<Insta> createState() => InstaState();
+}
+
+class InstaState extends State<Insta> {
+  List<String> _stories = [
+    "Story 1", "Story 2", "Story 3", "Story 4", "Story 5", "Story 6", "Story 7",
+    "Story 8", "Story 9", "Story 10", "Story 11", "Story 12", "Story 13"
+  ]; 
+  List<bool> color = [false, false, false, false, false, false, false, false, false, false, false, false, false];
+
+  List<String> _posts = [
+    "REMOVE 1",
+    "REMOVE 2",
+    "REMOVE 3",
+    "REMOVE 4",
+    "REMOVE 5"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("INSTAGRAM"),
+        ),
+        body: Column(
+          children: [
+            // Stories container
+            Container(
+              height: 80,  // Set height to ensure the bubbles fit well
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,  // Enable horizontal scrolling
+                itemCount: _stories.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        color[index] = !color[index];
+                      });
+                    },
+                    onDoubleTap: () {
+                      setState(() {
+                        _stories.removeAt(index);
+                        color.removeAt(index); // Remove the color state as well
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: Container(
+                        width: 80,
+                        child: Center(
+                          child: Text(
+                            color[index] ? "STORY" : "STORY",
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: color[index]
+                              ? Color.fromARGB(255, 88, 228, 7)
+                              : Color.fromARGB(255, 255, 23, 15),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            // Posts list
+            Expanded(
+              child: ListView.builder(
+                itemCount: _posts.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 2, bottom: 4),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _posts.removeAt(index);
+                        });
+                      },
+                      child: Container(
+                        height: 200,
+                        color: const Color.fromARGB(255, 54, 238, 244),
+                        child: Center(
+                          child: Text(_posts[index]),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
